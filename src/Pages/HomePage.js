@@ -20,10 +20,11 @@ const HomePage = () => {
       axios
         .get("https://restcountries.eu/rest/v2/name/united")
         .then(({ data }) => {
-          const res = data.map(({ name, alpha2Code }) => [
-            { name: name, alpha2Code: alpha2Code },
-          ]);
-          setCountriesList(res.flat());
+          const res = data.map(({ name, alpha2Code }) => ({
+            name: name,
+            alpha2Code: alpha2Code,
+          }));
+          setCountriesList(res);
         })
         .catch((err) => console.log(err));
     } else {
@@ -67,7 +68,7 @@ const HomePage = () => {
       </ul>
 
       <Pagination
-        count={countriesList.length / 20}
+        count={Math.round(countriesList.length / 20)}
         color="primary"
         className="choosePage"
         onChange={pagesHandler}
