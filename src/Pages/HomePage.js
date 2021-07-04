@@ -20,8 +20,10 @@ const HomePage = () => {
       axios
         .get("https://restcountries.eu/rest/v2/name/united")
         .then(({ data }) => {
-          data.map(({ name, alpha2Code }) => [name, alpha2Code]);
-          setCountriesList(data);
+          const res = data.map(({ name, alpha2Code }) => [
+            { name: name, alpha2Code: alpha2Code },
+          ]);
+          setCountriesList(res.flat());
         })
         .catch((err) => console.log(err));
     } else {
