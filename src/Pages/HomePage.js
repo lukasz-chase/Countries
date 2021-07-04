@@ -59,11 +59,9 @@ const HomePage = () => {
           )
           .slice(page > 1 ? page * 20 : 0, page * 20 + 20)
           .map((country, index) => (
-            <li key={index}>
-              <Link to={`/country/${country.alpha2Code}`} className="link">
-                {country.name}
-              </Link>
-            </li>
+            <Link to={`/country/${country.alpha2Code}`} className="link">
+              <li key={index}>{country.name}</li>
+            </Link>
           ))}
       </ul>
 
@@ -96,12 +94,12 @@ const AppComponent = styled.div`
   }
   ul {
     list-style: none;
+    .link {
+      text-decoration: none;
+      color: black;
+    }
     li {
       padding: 0.5rem;
-      .link {
-        text-decoration: none;
-        color: black;
-      }
       &:hover {
         background-color: aliceblue;
         cursor: pointer;
