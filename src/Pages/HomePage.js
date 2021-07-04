@@ -59,8 +59,12 @@ const HomePage = () => {
           )
           .slice(page > 1 ? page * 20 : 0, page * 20 + 20)
           .map((country, index) => (
-            <Link to={`/country/${country.alpha2Code}`} className="link">
-              <li key={index}>{country.name}</li>
+            <Link
+              to={`/country/${country.alpha2Code}`}
+              className="link"
+              key={index}
+            >
+              <li>{country.name}</li>
             </Link>
           ))}
       </ul>
