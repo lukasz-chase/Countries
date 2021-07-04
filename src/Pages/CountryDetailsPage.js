@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from "react";
+//axios
 import axios from "axios";
+//styled components
 import styled from "styled-components";
+//router
 import { useLocation, useHistory } from "react-router-dom";
 const CountryDetailsPage = () => {
-  const [country, setCountry] = useState([]);
+  //state
+  const [country, setCountry] = useState({});
   const location = useLocation();
   const history = useHistory();
   const alpha2Code = location.pathname.split("/")[2];
+  //handler
   const fetchData = async () => {
     const res = await axios.get(
       `https://restcountries.eu/rest/v2/alpha/${alpha2Code}`
     );
     return res.data;
   };
+  //useEffect
   useEffect(() => {
-    fetchData().then((data) => setCountry(data));
+    fetchData().then(({ name, currencies, capital }) =>
+      setCountry({ name: name, currencies: currencies, capital: capital })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(country);
   return (
     <CountryComponent>
       <h1>{country.name}</h1>
@@ -29,8 +37,8 @@ const CountryDetailsPage = () => {
         )}
         {country.currencies && (
           <ul className="currencies">
-            {country.currencies.map((currency) => (
-              <>
+            {country.currencies.map((currency, index) => (
+              <div key={index}>
                 <li>
                   Currency code: <b>{currency.code}</b>
                 </li>
@@ -41,7 +49,7 @@ const CountryDetailsPage = () => {
                   {" "}
                   Currency symbol: <b>{currency.symbol}</b>
                 </li>
-              </>
+              </div>
             ))}
           </ul>
         )}
@@ -59,6 +67,9 @@ const CountryComponent = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  h1 {
+    text-align: center;
+  }
   ul {
     list-style: none;
   }
